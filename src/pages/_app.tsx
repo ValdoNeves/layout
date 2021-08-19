@@ -4,7 +4,7 @@ import Head from 'next/head';
 import tema from '../../lib/theme'
 import CssBaseline from '@material-ui/core/CssBaseline';
 
-import LayoutWithMenu from '../../components/layout/LayoutWithMenu/LayoutWithMenu'
+// import LayoutWithMenu from '../../components/layout/LayoutWithMenu/LayoutWithMenu'
 
 import '../styles/globals.css';
 
@@ -20,11 +20,11 @@ function MyApp({ Component, pageProps }: AppProps) {
         />
       </Head>
       <ThemeProvider theme={tema}> 
-        <LayoutWithMenu>
+        {/* <LayoutWithMenu> */}
 
           <CssBaseline />
           <Component {...pageProps} />
-        </LayoutWithMenu>
+        {/* </LayoutWithMenu> */}
       </ThemeProvider>
     </>
   );

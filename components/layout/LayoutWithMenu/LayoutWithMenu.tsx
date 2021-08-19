@@ -90,7 +90,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-export default function MiniDrawer({ props }) {
+export default function MiniDrawer({ children }) {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
@@ -176,7 +176,7 @@ export default function MiniDrawer({ props }) {
       </Drawer>
       <main className={classes.content}>
         <div className={classes.toolbar} />
-            <Home></Home>
+            {children}
       </main>
     </div>
   );
