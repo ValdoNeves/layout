@@ -125,7 +125,7 @@ export default function MiniDrawer({ props }) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap>
-            ALFA SENSE - FICE LITE
+            ALFA SENSE - FINCE LITE
           </Typography>
         </Toolbar>
       </AppBar>
@@ -177,7 +177,6 @@ export default function MiniDrawer({ props }) {
       <main className={classes.content}>
         <div className={classes.toolbar} />
             <Home></Home>
-
       </main>
     </div>
   );
