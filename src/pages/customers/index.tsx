@@ -12,12 +12,18 @@ import {
   TableBody,
   IconButton,
   Paper,
+  Snackbar,
 } from '@material-ui/core';
 import { Delete, Edit } from '@material-ui/icons';
 import LayoutWithMenu from '../../../components/layout/LayoutWithMenu/LayoutWithMenu';
 import Link from 'next/link';
 import ConfirmationDialog from '../../../components/screen/ConfirmationDialog/ConfirmationDialog';
-import { useState } from 'react';
+import React, { useState } from 'react';
+import MuiAlert, { AlertProps } from '@material-ui/lab/Alert';
+
+function Alert(props: AlertProps) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -28,6 +34,12 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     table: {
       marginTop: theme.spacing(3),
+    },
+    alerta: {
+      width: '100%',
+      '& > * + *': {
+        marginTop: theme.spacing(2),
+      },
     },
   })
 );
@@ -40,29 +52,42 @@ export default function CustomerList() {
     itemId?: number;
     itemDescription?: string;
   }>({ show: false });
-  
-  
+
+  const [messageInfo, setMessageInfo] = useState<{
+    show: boolean;
+    message: string;
+  }>({ show: false, message: '' });
+
   const handleDelete = (item: any) => {
     setDeleteOptions({
       show: true,
       itemId: item.id,
-      itemDescription: item.name
-    })
-  }
+      itemDescription: item.name,
+    });
+  };
 
+  const handleCloseMessage = (
+    event: React.SyntheticEvent | React.MouseEvent,
+    reason?: string
+  ) => {
+    if (reason === 'clickaway') {
+      return;
+    }
 
+    setMessageInfo({ show: false, message: '' });
+  };
 
   //entra nessa funcao quando o usuario ja selecionou alguma das duas opcoes
   const handleDeleteCallBack = (value: string) => {
-    const {itemId} = deleteOptions
-    //zera a opcao 
-    setDeleteOptions({ show: false, itemId: null, itemDescription: null})
-    if(value === 'ok'){
+    const { itemId } = deleteOptions;
+    //zera a opcao
+    setDeleteOptions({ show: false, itemId: null, itemDescription: null });
+    if (value === 'ok') {
       //deletar o item
-
       //exibir uma mensagem de sucesso
+      setMessageInfo({ show: true, message: 'Item exluído com sucesso' });
     }
-  }
+  };
 
   const rows = [
     { id: 1, name: 'Luke Skywalker', email: 'luke@starwars.com' },
@@ -125,20 +150,33 @@ export default function CustomerList() {
           </TableBody>
         </Table>
       </TableContainer>
-      
-      <ConfirmationDialog 
-      id={`delete-${deleteOptions.itemId}`}
-      title="Excluir"
-      confirmButtonText="Excluir"
-      keepMounted
-      open={deleteOptions.show}
-      onClose={handleDeleteCallBack}
+
+      <ConfirmationDialog
+        id={`delete-${deleteOptions.itemId}`}
+        title="Excluir"
+        confirmButtonText="Excluir"
+        keepMounted
+        open={deleteOptions.show}
+        onClose={handleDeleteCallBack}
       >
         Confirma a exclusão do item{' '}
         <strong>{deleteOptions.itemDescription}</strong>
-        
       </ConfirmationDialog>
 
+      <Snackbar
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
+        autoHideDuration={1500}
+        open={messageInfo.show}
+        message={messageInfo.message}
+        key={messageInfo.message}
+        onClose={handleCloseMessage}
+      >
+        <Alert severity="success" onClose={handleCloseMessage}>Cliente removido com sucesso!</Alert>
+      </Snackbar>
+      {/* <Alert severity="error">This is an error message!</Alert>
+      <Alert severity="warning">This is a warning message!</Alert>
+      <Alert severity="info">This is an information message!</Alert>
+      <Alert severity="success">This is a success message!</Alert> */}
     </LayoutWithMenu>
   );
 }
