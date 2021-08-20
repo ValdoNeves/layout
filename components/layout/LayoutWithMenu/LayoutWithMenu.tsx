@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import clsx from 'clsx';
 import {
   createStyles,
@@ -22,7 +22,9 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
-import Home from '../../../src/pages';
+import DashboardIcon from '@material-ui/icons/Dashboard';
+import PeopleIcon from '@material-ui/icons/People';
+import Link from 'next/link';
 
 const drawerWidth = 240;
 
@@ -95,6 +97,11 @@ export default function MiniDrawer({ children }) {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
 
+  const menu: Array<{ name: string; to: string; icon?: ReactNode }> = [
+    { name: 'Dashboard', to: '/', icon: <DashboardIcon /> },
+    { name: 'Contatos', to: '/customers', icon: <PeopleIcon /> },
+  ];
+
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -153,17 +160,17 @@ export default function MiniDrawer({ children }) {
         </div>
         <Divider />
         <List>
-          {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
+          {menu.map((menuItem, index) => (
+            <Link key={index} href={menuItem.to} passHref>
+              <ListItem button component="a">
+                <ListItemIcon>{menuItem.icon}</ListItemIcon>
+                <ListItemText primary={menuItem.name} />
+              </ListItem>
+            </Link>
           ))}
         </List>
         <Divider />
-        <List>
+        {/* <List>
           {['All mail', 'Trash', 'Spam'].map((text, index) => (
             <ListItem button key={text}>
               <ListItemIcon>
@@ -172,11 +179,11 @@ export default function MiniDrawer({ children }) {
               <ListItemText primary={text} />
             </ListItem>
           ))}
-        </List>
+        </List> */}
       </Drawer>
       <main className={classes.content}>
         <div className={classes.toolbar} />
-            {children}
+        {children}
       </main>
     </div>
   );

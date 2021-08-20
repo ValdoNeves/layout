@@ -2,8 +2,8 @@ import { createTheme } from '@material-ui/core/styles';
 // import { red } from '@material-ui/core/colors';
 
 const theme = createTheme({
-  breakpoints:{
-    values:{
+  breakpoints: {
+    values: {
       xs: 0,
       sm: 640,
       md: 762,
@@ -11,9 +11,9 @@ const theme = createTheme({
       xl: 1280,
     },
   },
-  typography:{
+  typography: {
     fontSize: 16,
   },
-})
+});
 
 export default theme;

@@ -1,6 +1,4 @@
-import {
-  Button, createStyles, makeStyles, Theme
-} from '@material-ui/core'
+import { Button, createStyles, makeStyles, Theme } from '@material-ui/core';
 import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
 import InputAdornment from '@material-ui/core/InputAdornment';
@@ -15,10 +13,9 @@ import * as Yup from 'yup';
 import CopyrightComponent from '../../components/screen/Copyright/Copyright';
 import FormLoadingComponent from '../../components/screen/FormLoading/FormLoading';
 
-
-const useStyles = makeStyles((theme: Theme) => 
+const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    root:{
+    root: {
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
@@ -40,11 +37,11 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     divider: {
       margin: theme.spacing(4, 0),
-    }
+    },
   })
-)
+);
 
-interface IFormData{
+interface IFormData {
   email?: string;
   password?: string;
 }
@@ -75,7 +72,7 @@ export default function LoginPage() {
   return (
     <div className={classes.root}>
       <div>
-        <Typography className={classes.sloganTitle} variant="h2"  component="h1">
+        <Typography className={classes.sloganTitle} variant="h2" component="h1">
           Alfa Sense
         </Typography>
         <Typography variant="h4" component="h2">
@@ -161,5 +158,5 @@ export default function LoginPage() {
         <CopyrightComponent />
       </Paper>
     </div>
-  )
+  );
 }

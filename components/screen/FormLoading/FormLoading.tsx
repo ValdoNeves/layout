@@ -1,7 +1,12 @@
-import { Box, CircularProgress, createStyles, makeStyles, Theme } from '@material-ui/core';
+import {
+  Box,
+  CircularProgress,
+  createStyles,
+  makeStyles,
+  Theme,
+} from '@material-ui/core';
 
-
-const useStyles = makeStyles((theme: Theme) => 
+const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     loading: {
       display: 'flex',
@@ -9,18 +14,18 @@ const useStyles = makeStyles((theme: Theme) =>
       alignItems: 'center',
       margin: theme.spacing(1, 0),
     },
-    loadingProgress:{
+    loadingProgress: {
       marginRight: theme.spacing(1),
     },
   })
-)
+);
 
-export default function ForLoadingComponent(){
+export default function ForLoadingComponent() {
   const classes = useStyles();
 
   return (
     <Box className={classes.loading}>
-      <CircularProgress 
+      <CircularProgress
         className={classes.loadingProgress}
         disableShrink
         color="secondary"
@@ -28,6 +33,5 @@ export default function ForLoadingComponent(){
       />{' '}
       Aguarde...
     </Box>
-  )
-
+  );
 }
