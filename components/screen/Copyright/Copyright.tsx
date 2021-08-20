@@ -5,11 +5,11 @@ export default function CopyrightComponent(){
     <Box mt={5}>
       <Typography variant="body2" color="textSecondary" align="center">
         {'Copyright © '}
-        <Link color="inherit" href="https://valdoneves.ddns.net/" target="_blank">
+        <Link color="inherit" href="http://valdoneves.ddns.net/" target="_blank">
         Alfa Sense
-        </Link>{' '}
+        </Link>{' 2018 - '}
         {new Date().getFullYear()}
-        {'-'}
+        
       </Typography>
     </Box>
   )

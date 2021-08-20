@@ -1,7 +1,7 @@
 import { Box, CircularProgress, createStyles, makeStyles, Theme } from '@material-ui/core';
 
 
-const useStyles = makeStyles((theme: Theme) => {
+const useStyles = makeStyles((theme: Theme) => 
   createStyles({
     loading: {
       display: 'flex',
@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme: Theme) => {
       marginRight: theme.spacing(1),
     },
   })
-})
+)
 
 export default function ForLoadingComponent(){
   const classes = useStyles();

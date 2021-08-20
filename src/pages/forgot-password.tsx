@@ -1,35 +1,30 @@
-import {
-  Button, createStyles, makeStyles, Theme
-} from '@material-ui/core'
+import { Box, createStyles, makeStyles, Theme } from '@material-ui/core';
+import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
-import Grid from '@material-ui/core/Grid';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
-import LockIcon from '@material-ui/icons/Lock';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import MailIcon from '@material-ui/icons/Mail';
 import { useFormik } from 'formik';
-import Link from 'next/link';
+import NextLink from 'next/link';
+import React from 'react';
 import * as Yup from 'yup';
 import CopyrightComponent from '../../components/screen/Copyright/Copyright';
 import FormLoadingComponent from '../../components/screen/FormLoading/FormLoading';
 
-
-const useStyles = makeStyles((theme: Theme) => 
+const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    root:{
+    root: {
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
-      flexWrap: 'wrap',
       minHeight: '100vh',
-      gap: theme.spacing(5),
       padding: theme.spacing(2),
     },
     sloganTitle: {
       marginBottom: theme.spacing(2),
-      fontWeight: 'bold',
     },
     form: {
       padding: theme.spacing(4),
@@ -40,25 +35,23 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     divider: {
       margin: theme.spacing(4, 0),
-    }
+    },
   })
-)
+);
 
-interface IFormData{
+interface IFormData {
   email?: string;
-  password?: string;
 }
-export default function LoginPage() {
+
+export default function CreateAccountPage() {
   const classes = useStyles();
 
   const initialValues: IFormData = {
     email: '',
-    password: '',
   };
 
   const formSchema = Yup.object().shape({
     email: Yup.string().email('E-mail inválido').required('Obrigatório'),
-    password: Yup.string().required('Obrigatório'),
   });
 
   const formik = useFormik({
@@ -74,15 +67,13 @@ export default function LoginPage() {
 
   return (
     <div className={classes.root}>
-      <div>
-        <Typography className={classes.sloganTitle} variant="h2"  component="h1">
-          Alfa Sense
-        </Typography>
-        <Typography variant="h4" component="h2">
-          Segurança na Velocidade da Luz
-        </Typography>
-      </div>
       <Paper className={classes.form} elevation={3}>
+        <Box textAlign="center">
+          <Typography component="h3" variant="h5">
+            Esqueceu sua senha?
+          </Typography>
+        </Box>
+
         <form noValidate onSubmit={formik.handleSubmit}>
           <TextField
             variant="outlined"
@@ -92,7 +83,6 @@ export default function LoginPage() {
             placeholder="Seu e-mail"
             name="email"
             autoComplete="email"
-            autoFocus
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
@@ -105,27 +95,7 @@ export default function LoginPage() {
             error={formik.touched.email && Boolean(formik.errors.email)}
             helperText={formik.touched.email && formik.errors.email}
           />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            fullWidth
-            name="password"
-            placeholder="Sua senha"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <LockIcon />
-                </InputAdornment>
-              ),
-            }}
-            onChange={formik.handleChange}
-            value={formik.values.password}
-            error={formik.touched.password && Boolean(formik.errors.password)}
-            helperText={formik.touched.password && formik.errors.password}
-          />
+
           <Button
             className={classes.submit}
             type="submit"
@@ -135,31 +105,23 @@ export default function LoginPage() {
             color="primary"
             disabled={formik.isSubmitting}
           >
-            Entrar
+            Esqueci a minha senha
           </Button>
           {formik.isSubmitting && <FormLoadingComponent />}
         </form>
 
         <Divider className={classes.divider} variant="fullWidth" />
 
-        <Grid container spacing={1}>
-          <Grid item xs={12}>
-            <Link href="/forgot-password" passHref>
-              <Button variant="text" fullWidth={true}>
-                Esqueceu a senha?
-              </Button>
-            </Link>
-          </Grid>
-          <Grid item xs={12}>
-            <Link href="/create-account" passHref>
-              <Button variant="text" fullWidth={true}>
-                Criar uma conta
-              </Button>
-            </Link>
-          </Grid>
-        </Grid>
+        <Box mt={1} textAlign="center">
+          <NextLink href="login" passHref>
+            <Button color="primary" startIcon={<ArrowBackIcon />}>
+              Voltar
+            </Button>
+          </NextLink>
+        </Box>
+
         <CopyrightComponent />
       </Paper>
     </div>
-  )
+  );
 }
