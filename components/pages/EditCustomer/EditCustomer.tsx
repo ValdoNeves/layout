@@ -50,42 +50,40 @@ export default function EditCustomer() {
   //dados iniciais do formulario
   const initialValues: IFormData = {
     name: '',
-    email: ''
-  }
+    email: '',
+  };
 
   //validacao do formulario
   const formSchema = Yup.object().shape({
     name: Yup.string()
-    .required('Obrigatório')
-    .min(2, 'O nome deve ter pelo menos 2 catacteres'),
+      .required('Obrigatório')
+      .min(2, 'O nome deve ter pelo menos 2 catacteres'),
     email: Yup.string().email('E-mail inválido').required('Obrigatório'),
-    
-  })
+  });
 
   const formik = useFormik({
     initialValues: initialValues,
     validationSchema: formSchema,
     onSubmit: (values) => {
       setTimeout(() => {
-        alert(JSON.stringify(values, null, 2))
-        formik.setSubmitting(false)
-      }, 3000)
-    }
-  })
+        alert(JSON.stringify(values, null, 2));
+        formik.setSubmitting(false);
+      }, 3000);
+    },
+  });
 
-
-  useEffect(() =>{
-    if(id){
-      getCustomerById(Number(id)).then((row) =>{
-        setTitle(`Editando o cliente: ${row.name}`)
+  useEffect(() => {
+    if (id) {
+      getCustomerById(Number(id)).then((row) => {
+        setTitle(`Editando o cliente: ${row.name}`);
         //dados de edicao
         formik.setValues({
           email: row.email,
-          name: row.name
-        })
-      })
+          name: row.name,
+        });
+      });
     }
-  }, [])
+  }, []);
 
   return (
     <LayoutWithMenu>
@@ -96,8 +94,53 @@ export default function EditCustomer() {
               <ArrowBackIcon />
             </IconButton>
           </Link>
-          <Typography component="h1" variant="h4">{title}</Typography>
+          <Typography component="h1" variant="h4">
+            {title}
+          </Typography>
         </div>
+
+        <Paper className={classes.form} elevation={3}>
+          <form noValidate onSubmit={formik.handleSubmit}>
+            <TextField
+              variant="outlined"
+              margin="normal"
+              fullWidth
+              id="name"
+              label="Nome"
+              autoComplete="name"
+              autoFocus
+              onChange={formik.handleChange}
+              value={formik.values.name}
+              error={formik.touched.name && Boolean(formik.errors.name)}
+              helperText={formik.touched.name && formik.errors.name}
+            />
+
+            <TextField
+              variant="outlined"
+              margin="normal"
+              fullWidth
+              id="email"
+              label="E-mail"
+              autoComplete="email"
+              autoFocus
+              onChange={formik.handleChange}
+              value={formik.values.email}
+              error={formik.touched.email && Boolean(formik.errors.email)}
+              helperText={formik.touched.email && formik.errors.email}
+            />
+            <Button
+              className={classes.submit}
+              type="submit"
+              size="large"
+              variant="contained"
+              color="primary"
+              disabled={formik.isSubmitting}
+            >
+              Salvar
+            </Button>
+            {formik.isSubmitting && <FormLoadingComponent />}
+          </form>
+        </Paper>
       </Container>
     </LayoutWithMenu>
   );
