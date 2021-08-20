@@ -16,7 +16,7 @@ export const getCustomers = (): Promise<
   });
 };
 
-export const getCustomersById = (
+export const getCustomerById = (
   id: number
 ): Promise<{ id: number; name: string; email: string }> => {
   return new Promise((resolve) => {

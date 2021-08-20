@@ -47,12 +47,43 @@ export default function EditCustomer() {
   const router = useRouter();
   const { id } = router.query;
 
-  
+  //dados iniciais do formulario
+  const initialValues: IFormData = {
+    name: '',
+    email: ''
+  }
+
+  //validacao do formulario
+  const formSchema = Yup.object().shape({
+    name: Yup.string()
+    .required('Obrigatório')
+    .min(2, 'O nome deve ter pelo menos 2 catacteres'),
+    email: Yup.string().email('E-mail inválido').required('Obrigatório'),
+    
+  })
+
+  const formik = useFormik({
+    initialValues: initialValues,
+    validationSchema: formSchema,
+    onSubmit: (values) => {
+      setTimeout(() => {
+        alert(JSON.stringify(values, null, 2))
+        formik.setSubmitting(false)
+      }, 3000)
+    }
+  })
 
 
   useEffect(() =>{
     if(id){
-      setTitle(`Editando o cliente: ${0}`)
+      getCustomerById(Number(id)).then((row) =>{
+        setTitle(`Editando o cliente: ${row.name}`)
+        //dados de edicao
+        formik.setValues({
+          email: row.email,
+          name: row.name
+        })
+      })
     }
   }, [])
 
