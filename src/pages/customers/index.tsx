@@ -18,8 +18,9 @@ import { Delete, Edit } from '@material-ui/icons';
 import LayoutWithMenu from '../../../components/layout/LayoutWithMenu/LayoutWithMenu';
 import Link from 'next/link';
 import ConfirmationDialog from '../../../components/screen/ConfirmationDialog/ConfirmationDialog';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import MuiAlert, { AlertProps } from '@material-ui/lab/Alert';
+import {getCustomers} from '../../../lib/api/customers'
 
 function Alert(props: AlertProps) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -46,6 +47,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export default function CustomerList() {
   const classes = useStyles();
+  const [rows, setRows] = useState([])
 
   const [deleteOptions, setDeleteOptions] = useState<{
     show: boolean;
@@ -89,13 +91,9 @@ export default function CustomerList() {
     }
   };
 
-  const rows = [
-    { id: 1, name: 'Luke Skywalker', email: 'luke@starwars.com' },
-    { id: 2, name: 'R2-D2', email: 'r2d2@starwars.com' },
-    { id: 3, name: 'Darth Vader', email: 'vader@starwars.com' },
-    { id: 4, name: 'Leia Organa', email: 'leia@starwars.com' },
-    { id: 5, name: 'Owen Lars', email: 'owen@starwars.com' },
-  ];
+  useEffect(() =>{
+    getCustomers().then((rowsResult) => setRows(rowsResult))
+  }, [])
 
   return (
     <LayoutWithMenu>
@@ -171,7 +169,9 @@ export default function CustomerList() {
         key={messageInfo.message}
         onClose={handleCloseMessage}
       >
-        <Alert severity="success" onClose={handleCloseMessage}>Cliente removido com sucesso!</Alert>
+        <Alert severity="success" onClose={handleCloseMessage}>
+          Cliente removido com sucesso!
+        </Alert>
       </Snackbar>
       {/* <Alert severity="error">This is an error message!</Alert>
       <Alert severity="warning">This is a warning message!</Alert>
