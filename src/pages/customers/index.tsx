@@ -20,7 +20,7 @@ import Link from 'next/link';
 import ConfirmationDialog from '../../../components/screen/ConfirmationDialog/ConfirmationDialog';
 import React, { useEffect, useState } from 'react';
 import MuiAlert, { AlertProps } from '@material-ui/lab/Alert';
-import {getCustomers} from '../../../lib/api/customers'
+import { getCustomers } from '../../../lib/api/customers';
 
 function Alert(props: AlertProps) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export default function CustomerList() {
   const classes = useStyles();
-  const [rows, setRows] = useState([])
+  const [rows, setRows] = useState([]);
 
   const [deleteOptions, setDeleteOptions] = useState<{
     show: boolean;
@@ -91,9 +91,9 @@ export default function CustomerList() {
     }
   };
 
-  useEffect(() =>{
-    getCustomers().then((rowsResult) => setRows(rowsResult))
-  }, [])
+  useEffect(() => {
+    getCustomers().then((rowsResult) => setRows(rowsResult));
+  }, []);
 
   return (
     <LayoutWithMenu>
